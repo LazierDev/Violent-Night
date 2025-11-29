@@ -18,9 +18,10 @@ func slap_a_bitch(dir : Vector3, half_strength : bool):
 
 
 func hit(dmg:int, dir : Vector3):
-
 	health -= dmg
 	if health <= 0:
+		$metarig_002/Skeleton3D/normal/eye_alive.visible = false
+		$metarig_002/Skeleton3D/BoneAttachment3D/eye_dead.visible = true
 		$Npcdie.play()
 		$CollisionShape3D.disabled = true
 		slap_a_bitch(dir,false)

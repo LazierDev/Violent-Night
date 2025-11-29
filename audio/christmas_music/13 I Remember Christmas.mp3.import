@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bivelts0mt8eo"
+path="res://.godot/imported/13 I Remember Christmas.mp3-0eb724854bc74f58559a5a18d58ea293.mp3str"
+
+[deps]
+
+source_file="res://audio/christmas_music/13 I Remember Christmas.mp3"
+dest_files=["res://.godot/imported/13 I Remember Christmas.mp3-0eb724854bc74f58559a5a18d58ea293.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

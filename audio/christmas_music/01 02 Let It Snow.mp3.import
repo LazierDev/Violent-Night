@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://0oxpd26bmpge"
+path="res://.godot/imported/01 02 Let It Snow.mp3-80ed3aabb9a620e5863ab691bcd2b974.mp3str"
+
+[deps]
+
+source_file="res://audio/christmas_music/01 02 Let It Snow.mp3"
+dest_files=["res://.godot/imported/01 02 Let It Snow.mp3-80ed3aabb9a620e5863ab691bcd2b974.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

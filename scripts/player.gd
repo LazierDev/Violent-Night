@@ -28,7 +28,6 @@ var sb_cool_down := false
 var sb_strength := 15
 var sb_knockback := 150
 
-
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -46,6 +45,13 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	#switch weapon for debug
+	if Input.is_action_just_pressed("rmb"):
+		if cur_weapon == PUNCH:
+			cur_weapon = SNOWBALL
+		else:
+			cur_weapon = PUNCH
+	
 	if Input.is_action_pressed("weapon_menu"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		$ui/weapon_menu.visible = true
@@ -59,6 +65,7 @@ func _physics_process(delta: float) -> void:
 		match cur_weapon:
 			PUNCH : punch()
 			SNOWBALL : snow_ball_throw()
+			
 
 
 	if Input.is_action_just_pressed("ui_cancel"):
@@ -98,6 +105,8 @@ func punch():
 		anim.speed_scale = 2.0
 		move = false
 		for body in $graphics/Skeleton3D/Santa/punch_area.get_overlapping_bodies():
+			Engine.time_scale = 0.0
+			$Timer.start()
 			var dir = ((body.global_position - global_position).normalized()) * punch_knockback
 			body.hit(punch_strength,dir)
 		punch_cool_down = true
@@ -124,3 +133,7 @@ func get_speed():
 			anim.play("walk")
 			$Origin/SpringArm3D/Camera3D.fov = 75
 		return WALK_SPEED
+
+
+func _on_timer_timeout() -> void:
+	Engine.time_scale = 1.0
