@@ -22,7 +22,7 @@ func _ready() -> void:
 			songs.append(child)
 	
 	cur_song = songs.pick_random()
-	cur_song.play()
+	#cur_song.play()
 
 
 func _process(_delta: float) -> void:

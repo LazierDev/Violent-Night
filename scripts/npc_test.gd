@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 var health := 16
 var knock_out_time := 3
+var frozen := false
 @onready var torso: PhysicalBone3D = $metarig_002/Skeleton3D/PhysicalBoneSimulator3D/TORSO
 @onready var bones: PhysicalBoneSimulator3D = $metarig_002/Skeleton3D/PhysicalBoneSimulator3D
 @onready var anim: AnimationPlayer = $AnimationPlayer
@@ -19,6 +20,11 @@ func slap_a_bitch(dir : Vector3, half_strength : bool):
 
 func hit(dmg:int, dir : Vector3):
 	health -= dmg
+	if frozen:
+		$break_ice.emitting = true
+		$ice2.play()
+		$ice.visible = false
+		frozen = false
 	if health <= 0:
 		$metarig_002/Skeleton3D/normal/eye_alive.visible = false
 		$metarig_002/Skeleton3D/BoneAttachment3D/eye_dead.visible = true
@@ -48,6 +54,14 @@ func hit(dmg:int, dir : Vector3):
 			$metarig_001.visible = true
 			
 
+func freeze():
+	$ice2.play()
+	flash_white_anim()
+	$ice.visible = true
+	anim.stop()
+	frozen = true
+	$reset_freeze.start()
+
 
 func flash_white_rag():
 	$metarig_002/Skeleton3D/normal.visible = false
@@ -71,3 +85,9 @@ func flash_white_anim():
 
 func _on_timer_timeout() -> void:
 	Engine.time_scale = 1.0
+
+
+func _on_reset_freeze_timeout() -> void:
+	frozen = false
+	anim.play("Idle")
+	$ice.visible = false

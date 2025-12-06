@@ -24,7 +24,7 @@ var punch_knockback := 150
 #snowball
 var snow_balls := 15
 var sb_cool_down := false
-var sb_strength := 15
+var sb_strength := 25
 var sb_knockback := 250
 @onready var snow_ball_spawn: Node3D = $graphics/Skeleton3D/snow_ball_spawn
 var snow_ball := preload("res://scenes/snow_ball.tscn")
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 	# Handle Jump.
 	if Input.is_action_just_pressed("Jump") and is_on_floor() and move:
 		velocity.y = JUMP_VELOCITY
-		if anim.current_animation != "jump" and anim.current_animation != "punch":
+		if anim.current_animation != "jump" and anim.current_animation != "punch" and anim.current_animation != "snow_ball":
 			anim.play("jump")
 			anim.seek(0.5368)
 		
@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = direction.x * get_speed()
 			velocity.z = direction.z * get_speed()
 		else:
-			if anim.current_animation != "idle" and anim.current_animation != "jump" and anim.current_animation != "punch":
+			if anim.current_animation != "idle" and anim.current_animation != "jump" and anim.current_animation != "punch" and anim.current_animation != "snow_ball":
 				anim.play("idle")
 			velocity.x = move_toward(velocity.x, 0, WALK_SPEED)
 			velocity.z = move_toward(velocity.z, 0, WALK_SPEED)
@@ -115,22 +115,27 @@ func punch():
 
 func snow_ball_throw():
 	if !sb_cool_down:
+		sb_cool_down = true
+		anim.speed_scale = 1.0
+		anim.play("snow_ball")
+		anim.seek(1.8)
+		await get_tree().create_timer(0.65).timeout
 		sb_instance = snow_ball.instantiate()
 		sb_instance.global_transform = snow_ball_spawn.global_transform
 		get_parent().add_child(sb_instance)
 		sb_instance.mult_speed(self.velocity.length() + sb_strength)
-		sb_cool_down = true
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(0.5).timeout
+		anim.stop()
 		sb_cool_down = false
 
 func get_speed():
 	if Input.is_action_pressed("shift"):
-		if anim.current_animation != "run" and anim.current_animation != "jump" and anim.current_animation != "punch":
+		if anim.current_animation != "run" and anim.current_animation != "jump" and anim.current_animation != "punch"  and anim.current_animation != "snow_ball":
 			anim.play("run")
 			$Origin/SpringArm3D/Camera3D.fov = 90
 		return SPRINT_SPEED
 	else:
-		if anim.current_animation != "walk" and anim.current_animation != "jump" and anim.current_animation != "punch":
+		if anim.current_animation != "walk" and anim.current_animation != "jump" and anim.current_animation != "punch"  and anim.current_animation != "snow_ball":
 			anim.play("walk")
 			$Origin/SpringArm3D/Camera3D.fov = 75
 		return WALK_SPEED

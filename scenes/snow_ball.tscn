@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwdfff464hnak"]
+[gd_scene load_steps=13 format=3 uid="uid://cwdfff464hnak"]
 
 [ext_resource type="Script" uid="uid://dgyow72gdntrj" path="res://scripts/snow_ball.gd" id="1_xkj8w"]
+[ext_resource type="AudioStream" uid="uid://b4f1b2xu6yi2h" path="res://audio/snowball-throw-hit_7-278174.mp3" id="2_swj73"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_606uw"]
 
@@ -12,14 +13,67 @@ height = 0.5
 [sub_resource type="SphereShape3D" id="SphereShape3D_606uw"]
 radius = 0.25
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_xkj8w"]
+radius = 0.310428
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_swj73"]
+radius = 1.01556
+
+[sub_resource type="Curve" id="Curve_swj73"]
+_data = [Vector2(0.0220588, 0.348315), 0.0, 0.0, 0, 0, Vector2(0.375, 0.134832), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_l4rog"]
+curve = SubResource("Curve_swj73")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lw0u1"]
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -30, 0)
+scale_min = 0.2
+scale_max = 0.2
+alpha_curve = SubResource("CurveTexture_l4rog")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b7gba"]
+transparency = 1
+
+[sub_resource type="BoxMesh" id="BoxMesh_326c3"]
+material = SubResource("StandardMaterial3D_b7gba")
+
 [node name="snow_ball" type="RigidBody3D"]
-collision_layer = 4
-collision_mask = 7
 linear_velocity = Vector3(0, 5, 0)
 script = ExtResource("1_xkj8w")
 
+[node name="Snowball-throw-hit7-278174" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_swj73")
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 mesh = SubResource("SphereMesh_xkj8w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_606uw")
+
+[node name="kaboom" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="kaboom"]
+shape = SubResource("SphereShape3D_xkj8w")
+
+[node name="aim_bot" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="aim_bot"]
+shape = SubResource("SphereShape3D_swj73")
+
+[node name="snow" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.149233, 0)
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_lw0u1")
+draw_pass_1 = SubResource("BoxMesh_326c3")
+
+[connection signal="body_entered" from="kaboom" to="." method="_on_kaboom_body_entered"]
+[connection signal="body_entered" from="aim_bot" to="." method="_on_aim_bot_body_entered"]
