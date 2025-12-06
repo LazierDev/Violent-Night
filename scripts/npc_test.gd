@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-var health := 15
+var health := 16
 var knock_out_time := 3
 @onready var torso: PhysicalBone3D = $metarig_002/Skeleton3D/PhysicalBoneSimulator3D/TORSO
 @onready var bones: PhysicalBoneSimulator3D = $metarig_002/Skeleton3D/PhysicalBoneSimulator3D
@@ -24,6 +24,8 @@ func hit(dmg:int, dir : Vector3):
 		$metarig_002/Skeleton3D/BoneAttachment3D/eye_dead.visible = true
 		$Npcdie.play()
 		$CollisionShape3D.disabled = true
+		$Timer.start()
+		Engine.time_scale = 0.0
 		slap_a_bitch(dir,false)
 	else:
 		$Hurt.play()
@@ -65,3 +67,7 @@ func flash_white_anim():
 	await get_tree().create_timer(0.2).timeout
 	$metarig_001/Skeleton3D/normal.visible = true
 	$metarig_001/Skeleton3D/white.visible = false
+
+
+func _on_timer_timeout() -> void:
+	Engine.time_scale = 1.0

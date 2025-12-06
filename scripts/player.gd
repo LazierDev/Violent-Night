@@ -22,11 +22,13 @@ var punch_strength := 6
 var punch_knockback := 150
 
 #snowball
-enum {RELOAD, HOLD, THROW}
 var snow_balls := 15
 var sb_cool_down := false
 var sb_strength := 15
-var sb_knockback := 150
+var sb_knockback := 250
+@onready var snow_ball_spawn: Node3D = $graphics/Skeleton3D/snow_ball_spawn
+var snow_ball := preload("res://scenes/snow_ball.tscn")
+var sb_instance
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -76,7 +78,7 @@ func _physics_process(delta: float) -> void:
 	# Handle Jump.
 	if Input.is_action_just_pressed("Jump") and is_on_floor() and move:
 		velocity.y = JUMP_VELOCITY
-		if anim.current_animation != "jump":
+		if anim.current_animation != "jump" and anim.current_animation != "punch":
 			anim.play("jump")
 			anim.seek(0.5368)
 		
@@ -92,7 +94,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = direction.x * get_speed()
 			velocity.z = direction.z * get_speed()
 		else:
-			if anim.current_animation != "idle" and anim.current_animation != "jump":
+			if anim.current_animation != "idle" and anim.current_animation != "jump" and anim.current_animation != "punch":
 				anim.play("idle")
 			velocity.x = move_toward(velocity.x, 0, WALK_SPEED)
 			velocity.z = move_toward(velocity.z, 0, WALK_SPEED)
@@ -103,33 +105,32 @@ func punch():
 	if !punch_cool_down:
 		anim.play("punch")
 		anim.speed_scale = 2.0
-		move = false
 		for body in $graphics/Skeleton3D/Santa/punch_area.get_overlapping_bodies():
-			Engine.time_scale = 0.0
-			$Timer.start()
 			var dir = ((body.global_position - global_position).normalized()) * punch_knockback
 			body.hit(punch_strength,dir)
 		punch_cool_down = true
 		await anim.animation_finished
-		move = true
 		punch_cool_down = false
 		anim.speed_scale = 1.0
 
 func snow_ball_throw():
 	if !sb_cool_down:
-		move = false
-		if anim.current_animation != "snow_ball":
-			anim.play("snow_ball")
+		sb_instance = snow_ball.instantiate()
+		sb_instance.global_transform = snow_ball_spawn.global_transform
+		get_parent().add_child(sb_instance)
+		sb_instance.mult_speed(self.velocity.length() + sb_strength)
 		sb_cool_down = true
+		await get_tree().create_timer(0.1).timeout
+		sb_cool_down = false
 
 func get_speed():
 	if Input.is_action_pressed("shift"):
-		if anim.current_animation != "run" and anim.current_animation != "jump":
+		if anim.current_animation != "run" and anim.current_animation != "jump" and anim.current_animation != "punch":
 			anim.play("run")
 			$Origin/SpringArm3D/Camera3D.fov = 90
 		return SPRINT_SPEED
 	else:
-		if anim.current_animation != "walk" and anim.current_animation != "jump":
+		if anim.current_animation != "walk" and anim.current_animation != "jump" and anim.current_animation != "punch":
 			anim.play("walk")
 			$Origin/SpringArm3D/Camera3D.fov = 75
 		return WALK_SPEED

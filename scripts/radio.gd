@@ -25,12 +25,14 @@ func _ready() -> void:
 	cur_song.play()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	label.text = cur_song.name
 	if Input.is_action_just_pressed("e") and near:
+		$"../clck".play()
 		$"../GPUParticles3D".emitting = true
 		song_switch()
 	if Input.is_action_just_pressed("q") and near:
+		$"../clck".play()
 		if cur_song.playing:
 			time_stamp = cur_song.get_playback_position()
 			cur_song.stop()

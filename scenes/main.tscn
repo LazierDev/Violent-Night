@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=4 uid="uid://du2x258df3yv0"]
+[gd_scene load_steps=79 format=4 uid="uid://du2x258df3yv0"]
 
 [ext_resource type="AudioStream" uid="uid://c7kvsd0n2v8k2" path="res://audio/sound-of-falling-snow-211055.mp3" id="2_jkv2x"]
 [ext_resource type="PackedScene" uid="uid://col4nmvrmpp7w" path="res://scenes/player.tscn" id="2_sugp2"]
@@ -24,6 +24,7 @@
 [ext_resource type="AudioStream" uid="uid://taxs2vhj0ybk" path="res://audio/christmas_music/11 That's What I Want for Christmas.mp3" id="22_2f3dj"]
 [ext_resource type="AudioStream" uid="uid://bivelts0mt8eo" path="res://audio/christmas_music/13 I Remember Christmas.mp3" id="23_yq6so"]
 [ext_resource type="AudioStream" uid="uid://duq6fsm634ypg" path="res://audio/christmas_music/20 Christmas Time is Here Again.mp3" id="24_fv21b"]
+[ext_resource type="AudioStream" uid="uid://bxj6w62c00ymk" path="res://audio/old-radio-button-click-97549.mp3" id="24_og1vs"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jyhfs"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -710,28 +711,28 @@ autoplay = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.643338, 0)
 
 [node name="NPC_TEST" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.9428, 0.620757, -2.27443)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.4089, 0.620757, -2.27443)
 
 [node name="NPC_TEST2" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2999, 0.620757, -2.27443)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6398, 0.620757, -2.27443)
 
 [node name="NPC_TEST3" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2999, 0.620757, 0.732776)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.6398, 0.620757, 0.732776)
 
 [node name="NPC_TEST4" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.8364, 0.620757, 0.732776)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1763, 0.620757, 0.732776)
 
 [node name="NPC_TEST5" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95618, 0.620757, -2.27443)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.2961, 0.620757, -2.27443)
 
 [node name="NPC_TEST6" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68676, 0.620757, -2.27443)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.65316, 0.620757, -2.27443)
 
 [node name="NPC_TEST7" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.68676, 0.620757, 0.732776)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.65316, 0.620757, 0.732776)
 
 [node name="NPC_TEST8" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.84973, 0.620757, 0.732776)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.1896, 0.620757, 0.732776)
 
 [node name="NPC_TEST9" parent="enviorment/npcs" instance=ExtResource("3_sugp2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4038, 0.620757, -2.27443)
@@ -1361,9 +1362,6 @@ position = Vector2(951.5, 622)
 scale = Vector2(2107, 1334)
 mesh = SubResource("BoxMesh_eb6dy")
 
-[node name="snow_ball" parent="." instance=ExtResource("13_trceg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.33823, 0.5, 5.75984)
-
 [node name="Radio" type="MeshInstance3D" parent="."]
 transform = Transform3D(-209.58, -121.001, -5.28914e-06, 0, -1.05782e-05, 242.003, -121.001, 209.58, 9.16107e-06, 5.79036, -0.0054609, 9.8687)
 mesh = SubResource("ArrayMesh_gqmmt")
@@ -1462,8 +1460,14 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 text = "current song"
 
+[node name="clck" type="AudioStreamPlayer" parent="Radio"]
+stream = ExtResource("24_og1vs")
+
 [node name="Player" parent="." instance=ExtResource("2_sugp2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.44705, 1.56904, 6.1502)
+
+[node name="snow_ball" parent="." instance=ExtResource("13_trceg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06308, 1.2617, 4.98941)
 
 [connection signal="body_entered" from="Radio/Area3D" to="Radio/StaticBody3D" method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Radio/Area3D" to="Radio/StaticBody3D" method="_on_area_3d_body_exited"]
