@@ -2002,8 +2002,8 @@ transform = Transform3D(-0.00791995, -0.000654755, 0.0025079, 0.000676616, -0.00
 collision_layer = 4
 collision_mask = 7
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00116784, 0.00114909, 0.326795)
-body_offset = Transform3D(0.00833332, 1.62981e-09, -2.5247e-07, -2.87306e-07, -1.48735e-07, -0.00833336, -7.21775e-09, 0.00833335, -1.46028e-07, -9.64943e-06, 0.0027233, -9.52807e-06)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00116783, 0.0011491, 0.326795)
+body_offset = Transform3D(0.00833332, 1.74623e-09, -2.52467e-07, -2.87308e-07, -1.4875e-07, -0.00833336, -7.21775e-09, 0.00833335, -1.46072e-07, -9.64943e-06, 0.0027233, -9.52807e-06)
 bone_name = "forearm.R"
 joint_constraints/x/linear_limit_enabled = true
 joint_constraints/x/linear_limit_upper = 0.0
@@ -2530,12 +2530,12 @@ transform = Transform3D(1, -1.39698e-09, -3.72529e-09, 7.45058e-09, -2.98023e-08
 shape = SubResource("CapsuleShape3D_7mvoa")
 
 [node name="RIGHT_FOOT" type="PhysicalBone3D" parent="metarig_002/Skeleton3D/PhysicalBoneSimulator3D"]
-transform = Transform3D(0.0083333, 6.48324e-08, 1.63709e-07, -1.7554e-07, 0.00202064, 0.00808465, 2.4178e-08, -0.00808466, 0.00202064, -0.00216432, -0.000284492, 0.00085298)
+transform = Transform3D(0.0083333, 6.48324e-08, 1.63694e-07, -1.7554e-07, 0.00202064, 0.00808465, 2.4178e-08, -0.00808466, 0.00202064, -0.00216432, -0.000284492, 0.00085298)
 collision_layer = 4
 collision_mask = 7
 joint_type = 5
-joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6212e-06, 7.11819e-06, 0.0815919)
-body_offset = Transform3D(0.0083333, 9.08003e-08, 1.31782e-07, 1.30254e-07, 7.57864e-08, -0.00833311, -9.15024e-08, 0.00833333, -3.6438e-08, -3.25963e-08, 0.000679914, -5.6345e-08)
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62106e-06, 7.11819e-06, 0.0815919)
+body_offset = Transform3D(0.0083333, 9.08003e-08, 1.31797e-07, 1.30254e-07, 7.57864e-08, -0.00833311, -9.15024e-08, 0.00833333, -3.6438e-08, -3.25963e-08, 0.000679914, -5.6345e-08)
 bone_name = "foot.R"
 joint_constraints/x/linear_limit_enabled = true
 joint_constraints/x/linear_limit_upper = 0.0
