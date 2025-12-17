@@ -28,8 +28,8 @@ var punch_knockback := 150
 #snowball
 var snow_balls := 15
 var sb_cool_down := false
-var current_sb_strength := 3.0
-var max_sb_strength := 35
+var current_sb_strength := 8.0
+var max_sb_strength := 100
 var sb_knockback := 250
 @onready var snow_ball_spawn: Node3D = $graphics/Skeleton3D/snow_ball_spawn
 var snow_ball := preload("res://scenes/snow_ball.tscn")
@@ -54,7 +54,6 @@ func _input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
-	print(anim.current_animation_position)
 	#switch weapon for debug
 	if Input.is_action_just_pressed("rmb"):
 		if cur_weapon == PUNCH:
@@ -141,8 +140,9 @@ func punch():
 		anim.play("punch")
 		anim.speed_scale = 2.0
 		for body in $graphics/Skeleton3D/Santa/punch_area.get_overlapping_bodies():
-			var dir = ((body.global_position - global_position).normalized()) * punch_knockback
-			body.hit(punch_strength,dir)
+			if body.has_method("hit"):
+				var dir = ((body.global_position - global_position).normalized()) * punch_knockback
+				body.hit(punch_strength,dir)
 		punch_cool_down = true
 		await anim.animation_finished
 		punch_cool_down = false
@@ -154,11 +154,12 @@ func snow_ball_throw():
 		sb_instance = snow_ball.instantiate()
 		sb_instance.global_transform = snow_ball_spawn.global_transform
 		get_parent().add_child(sb_instance)
-		sb_instance.mult_speed(current_sb_strength)
+		sb_instance.mult_speed(self.velocity.length()+ current_sb_strength)
 		await get_tree().create_timer(0.5).timeout
 		anim.stop()
 		sb_cool_down = false
 		move_lock = false
+		current_sb_strength = 8.0
 
 func get_speed():
 	if Input.is_action_pressed("shift") and !slow:
